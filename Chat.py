@@ -18,7 +18,7 @@ __import__('pysqlite3')
 import sys 
 sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
 
-openai_api_key = OPENAI_API_KEY
+openai_api_key = st.secrets["OPENAI_API_KEY"]
 embeddings = OpenAIEmbeddings(api_key=openai_api_key, model="text-embedding-3-small")
 
 st.sidebar.subheader('Documents:')
