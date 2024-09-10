@@ -15,7 +15,7 @@ from langchain_community.chat_message_histories import ChatMessageHistory
 from langchain_core.chat_history import BaseChatMessageHistory
 from langchain_core.runnables.history import RunnableWithMessageHistory
 
-openai_api_key = os.getenv("OPEN_API_KEY")
+openai_api_key = "sk-proj-ZtaEi190d28t06TuBNjST3BlbkFJ6byccsPVXzCGuFIPiPJV"
 embeddings = OpenAIEmbeddings(api_key=openai_api_key, model="text-embedding-3-small")
 
 st.sidebar.subheader('Documents:')
