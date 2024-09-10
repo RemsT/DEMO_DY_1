@@ -1,0 +1,9 @@
+os
+streamlit
+chromadb
+langchain
+langchain_openai
+langchain_chroma
+langchain_community
+langchain_core
+chromadb.config
