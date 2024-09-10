@@ -1,4 +1,3 @@
-streamlit
 chromadb
 langchain
 langchain_openai
