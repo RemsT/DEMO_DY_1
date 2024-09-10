@@ -1,4 +1,3 @@
-sys
 sentence-transformers
 torch
 chromadb
