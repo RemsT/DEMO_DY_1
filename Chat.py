@@ -14,6 +14,8 @@ from langchain.chains import create_history_aware_retriever, create_retrieval_ch
 from langchain_community.chat_message_histories import ChatMessageHistory
 from langchain_core.chat_history import BaseChatMessageHistory
 from langchain_core.runnables.history import RunnableWithMessageHistory
+__import__('pysqlite3') 
+import sys sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
 
 openai_api_key = OPENAI_API_KEY
 embeddings = OpenAIEmbeddings(api_key=openai_api_key, model="text-embedding-3-small")
