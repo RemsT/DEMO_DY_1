@@ -7,3 +7,4 @@ langchain_chroma
 langchain_community
 langchain_core
 streamlit
+pysqlite3-binary
