@@ -1,6 +1,6 @@
 sentence-transformers
 torch
-chromadb = 0.3.29
+chromadb == 0.3.29
 langchain
 langchain_openai
 langchain_chroma
