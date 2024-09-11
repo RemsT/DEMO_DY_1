@@ -5,6 +5,10 @@ import tempfile
 from langchain_community.document_loaders import PyPDFLoader
 from streamlit_chromadb_connection.chromadb_connection import ChromadbConnection
 
+__import__('pysqlite3') 
+import sys 
+sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
+
 openai_api_key = st.secrets["OPENAI_API_KEY"]
 
 configuration = {
