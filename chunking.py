@@ -3,8 +3,20 @@ import config
 import streamlit as st
 import tempfile
 from langchain_community.document_loaders import PyPDFLoader
+from streamlit_chromadb_connection.chromadb_connection import ChromadbConnection
 
 openai_api_key = st.secrets["OPENAI_API_KEY"]
+
+configuration = {
+    "client": "PersistentClient",
+    "path": "/tmp/.chroma"
+}
+collection_name = "documents_collection"
+conn = st.connection("chromadb",
+                     type=ChromaDBConnection,
+                     **configuration)
+documents_collection_df = conn.get_collection_data(collection_name)
+st.dataframe(documents_collection_df)
 
 st.title("Upload pdf files and create your database")
 
