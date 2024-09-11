@@ -9,3 +9,4 @@ langchain_core
 streamlit
 pysqlite3-binary
 pypdf
+streamlit-chromadb-connection
