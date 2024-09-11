@@ -8,4 +8,4 @@ langchain_community
 langchain_core
 pysqlite3-binary
 pypdf
-streamlit-chromadb-connection==1.0.5
+streamlit-chromadb-connection==1.0.1
