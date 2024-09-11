@@ -4,7 +4,7 @@ import streamlit as st
 import tempfile
 from langchain_community.document_loaders import PyPDFLoader
 
-openai_api_key = os.getenv("OPEN_API_KEY")
+openai_api_key = st.secrets["OPENAI_API_KEY"]
 
 st.title("Upload pdf files and create your database")
 
