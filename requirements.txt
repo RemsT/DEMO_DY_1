@@ -10,4 +10,3 @@ streamlit
 pysqlite3-binary
 pypdf
 tempfile
-os
