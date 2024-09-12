@@ -1,7 +1,6 @@
 import os
 import config
 import streamlit as st
-import sqlite3
 from chromadb.config import Settings
 from langchain_openai import ChatOpenAI
 from langchain_chroma import Chroma
