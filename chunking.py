@@ -6,13 +6,14 @@ from langchain_community.document_loaders import PyPDFLoader
 from langchain_pinecone import PineconeVectorStore
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from pinecone import Pinecone
+from langchain_openai import OpenAIEmbeddings
 
 openai_api_key = st.secrets["OPENAI_API_KEY"]
 pinecone_api_key = st.secrets["PINECONE_API_KEY"]
 index_name = st.secrets["INDEX_KEY"]
 
 # Initializing Pinecone Vector DB
-pc = Pinecone(api_key="529c2def-4f8b-4898-b227-d902cff98240")
+pc = Pinecone(api_key=pinecone_api_key)
 index = pc.Index("quickstart")
 
 st.title("Upload pdf files and create your database")
@@ -36,18 +37,8 @@ text_splitter = RecursiveCharacterTextSplitter(chunk_size=1500, chunk_overlap=20
 splits = text_splitter.split_documents(docs)
 
 # SAVE TO DISK
-from langchain_openai import OpenAIEmbeddings
-
 embeddings = OpenAIEmbeddings(api_key=openai_api_key, model="text-embedding-3-small")
 
-vectorstore = Chroma.from_documents(
-    documents=splits,
-    embedding=embeddings,
-    persist_directory="./chroma.db",
-    client_settings=Settings(
-        anonymized_telemetry=False,
-        is_persistent=True,
-    ),
-)
+vectorstore =vectordb = Pinecone.from_documents(texts, embeddings, index_name='index-1')
 
 st.write("Vector database created with your documents")
