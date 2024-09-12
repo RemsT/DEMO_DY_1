@@ -3,10 +3,10 @@ import config
 import streamlit as st
 import tempfile
 from langchain_community.document_loaders import PyPDFLoader
-from langchain.vectorstores import Pinecone as PineconeVectorStore
 from langchain_text_splitters import RecursiveCharacterTextSplitter
-import pinecone
 from langchain_openai import OpenAIEmbeddings
+from langchain_pinecone import PineconeVectorStore
+from pinecone import Pinecone as pinecone_init, ServerlessSpec
 
 openai_api_key = st.secrets["OPENAI_API_KEY"]
 pinecone_api_key = st.secrets["PINECONE_API_KEY"]
@@ -14,10 +14,8 @@ pinecone_env = st.secrets["PINECONE_ENV"]
 index_name = st.secrets["INDEX_KEY"]
 
 # Initializing Pinecone Vector DB
-pinecone.init(
-    api_key = pinecone_api_key,
-    environment = pinecone_env
-)
+pc = pinecone_init( api_key=pinecone_api_key)
+index = pc.Index("aviation")
 
 st.title("Upload pdf files and create your database")
 
