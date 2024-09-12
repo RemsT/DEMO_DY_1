@@ -1,7 +1,6 @@
 import os
 import config
 import streamlit as st
-from chromadb.config import Settings
 from langchain_openai import OpenAIEmbeddings
 from langchain_core.prompts import ChatPromptTemplate
 from langchain.chains import create_retrieval_chain
