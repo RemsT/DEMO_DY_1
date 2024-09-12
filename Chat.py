@@ -14,11 +14,14 @@ from langchain.chains import create_history_aware_retriever, create_retrieval_ch
 from langchain_community.chat_message_histories import ChatMessageHistory
 from langchain_core.chat_history import BaseChatMessageHistory
 from langchain_core.runnables.history import RunnableWithMessageHistory
-__import__('pysqlite3') 
-import sys 
-sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
+from pinecone import Pinecone as pinecone_init
 
 openai_api_key = st.secrets["OPENAI_API_KEY"]
+pinecone_api_key = st.secrets["PINECONE_API_KEY"]
+pinecone_env = st.secrets["PINECONE_ENV"]
+index_name = st.secrets["INDEX_KEY"]
+openai_api_key = st.secrets["OPENAI_API_KEY"]
+
 embeddings = OpenAIEmbeddings(api_key=openai_api_key, model="text-embedding-3-small")
 
 st.sidebar.subheader('Documents:')
@@ -27,16 +30,16 @@ st.sidebar.write('- ACRP synthesis 97: How Airports Plan for Changing Aircraft C
 st.sidebar.write('- ACRP Report 25: Airport Passenger Terminal Planning and Design')
 
 # LOAD THE VECTOR DATABASE AND PREPARE RETRIEVAL
-vectorstore = Chroma(
-    embedding_function=embeddings,
-    persist_directory="./chroma.db",
-    client_settings=Settings(
-        anonymized_telemetry=False,
-        is_persistent=True,
-    ),
-)
+from langchain_pinecone import PineconeVectorStore
+
+# Initializing Pinecone Vector DB
+pc = pinecone_init( api_key=pinecone_api_key)
+index = pc.Index("aviation")
+vector_store = PineconeVectorStore(index=index, embedding=embeddings)
+
 llm = ChatOpenAI( model_name="gpt-4o-mini", openai_api_key=openai_api_key, temperature=0.2)
-retriever = vectorstore.as_retriever(search_type="mmr", search_kwargs={"k": 3, "fetch_k": 4})
+
+retriever = vector_store.as_retriever(search_type="mmr", search_kwargs={"k": 3, "fetch_k": 4})
 
 
 # Optionally, specify your own session_state key for storing messages
@@ -71,7 +74,8 @@ assistant_prompt = (
     "If you don't know the answer, say that you don't know. "
     "Use three sentences maximum and keep the answer concise."
     "If you are using number make sure you are using the correct values."
-    "If you are not sure of any information please say it."
+    "If you  are missing information you can respond that you don't have enough information."
+    "If you are not sure you can say that you are not sure"
     "\n\n"
     "{context}"
 )
@@ -122,4 +126,3 @@ if input := st.chat_input():
             for doc in response["context"]:
                 source = os.path.split(doc.metadata["source"])[1] + "--->   Page: "+ str(doc.metadata["page"])
                 st.write(source)
-
