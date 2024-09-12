@@ -3,9 +3,9 @@ import config
 import streamlit as st
 import tempfile
 from langchain_community.document_loaders import PyPDFLoader
-from langchain_pinecone import PineconeVectorStore
+from langchain.vectorstores import Pinecone as PineconeVectorStore
 from langchain_text_splitters import RecursiveCharacterTextSplitter
-from pinecone import Pinecone
+import pinecone
 from langchain_openai import OpenAIEmbeddings
 
 openai_api_key = st.secrets["OPENAI_API_KEY"]
@@ -14,8 +14,10 @@ pinecone_env = st.secrets["PINECONE_ENV"]
 index_name = st.secrets["INDEX_KEY"]
 
 # Initializing Pinecone Vector DB
-pc = Pinecone(api_key=pinecone_api_key)
-index = pc.Index("quickstart")
+pinecone.init(
+    api_key = pinecone_api_key,
+    environment = pinecone_env
+)
 
 st.title("Upload pdf files and create your database")
 
@@ -40,6 +42,10 @@ splits = text_splitter.split_documents(docs)
 # SAVE TO DISK
 embeddings = OpenAIEmbeddings(api_key=openai_api_key, model="text-embedding-3-small")
 
-vectorstore =vectordb = Pinecone.from_documents(texts, embeddings, index_name='index-1')
+vectorstore_from_docs = PineconeVectorStore.from_documents(
+        splits,
+        index_name=index_name,
+        embedding=embeddings
+        )
 
 st.write("Vector database created with your documents")
