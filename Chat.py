@@ -22,7 +22,7 @@ openai_api_key = st.secrets["OPENAI_API_KEY"]
 
 embeddings = OpenAIEmbeddings(api_key=openai_api_key, model="text-embedding-3-small")
 
-st.set_page_config(page_title="DY Chat", page_icon=st.icone("flight))
+st.set_page_config(page_title="DY Chat")
 
 st.sidebar.subheader('Documents:')
 st.sidebar.write('- Advicary circular: Airport Terminal Planning')
