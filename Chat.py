@@ -73,7 +73,7 @@ assistant_prompt = (
     "help answer the questions. "
     "If you don't know the answer, say that you don't know. "
     "Use three sentences maximum and keep the answer concise."
-    "If you are using number make sure you are using the correct values."
+    "When you are using number make sure you are using the correct value."
     "If you  are missing information you can respond that you don't have enough information."
     "If you are not sure you can say that you are not sure"
     "\n\n"
