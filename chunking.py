@@ -2,6 +2,7 @@ import os
 import config
 import streamlit as st
 import tempfile
+import pinecone as pc
 from langchain_community.document_loaders import PyPDFLoader
 from langchain_pinecone import PineconeVectorStore
 from langchain_text_splitters import RecursiveCharacterTextSplitter
@@ -11,7 +12,7 @@ pinecone_api_key = st.secrets["PINECONE_API_KEY"]
 index_name = st.secrets["INDEX_KEY"]
 
 # Initializing Pinecone Vector DB
-pinecone.init(
+pc.init(
     api_key=pinecone_api_key,
     environment=PINECONE_ENV
 )
