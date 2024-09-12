@@ -22,6 +22,8 @@ openai_api_key = st.secrets["OPENAI_API_KEY"]
 
 embeddings = OpenAIEmbeddings(api_key=openai_api_key, model="text-embedding-3-small")
 
+st.set_page_config(page_title="My Tab Title", page_icon="avion",)
+
 st.sidebar.subheader('Documents:')
 st.sidebar.write('- Advicary circular: Airport Terminal Planning')
 st.sidebar.write('- ACRP synthesis 97: How Airports Plan for Changing Aircraft Capacity: The Effects of Upgauging')
@@ -86,7 +88,6 @@ question_answer_chain = create_stuff_documents_chain(llm, prompt)
 rag_chain = create_retrieval_chain(history_aware_retriever, question_answer_chain)
 
 store = {}
-
 
 def get_session_history(session_id: str) -> BaseChatMessageHistory:
     if session_id not in store:
