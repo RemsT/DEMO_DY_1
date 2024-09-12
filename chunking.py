@@ -10,6 +10,7 @@ from langchain_openai import OpenAIEmbeddings
 
 openai_api_key = st.secrets["OPENAI_API_KEY"]
 pinecone_api_key = st.secrets["PINECONE_API_KEY"]
+pinecone_env = st.secrets["PINECONE_ENV"]
 index_name = st.secrets["INDEX_KEY"]
 
 # Initializing Pinecone Vector DB
