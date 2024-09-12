@@ -1,6 +1,7 @@
 import os
 import config
 import streamlit as st
+from langchain_openai import ChatOpenAI
 from langchain_openai import OpenAIEmbeddings
 from langchain_core.prompts import ChatPromptTemplate
 from langchain.chains import create_retrieval_chain
