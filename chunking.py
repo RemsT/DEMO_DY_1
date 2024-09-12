@@ -2,20 +2,18 @@ import os
 import config
 import streamlit as st
 import tempfile
-import pinecone as pc
 from langchain_community.document_loaders import PyPDFLoader
 from langchain_pinecone import PineconeVectorStore
 from langchain_text_splitters import RecursiveCharacterTextSplitter
+from pinecone import Pinecone
 
 openai_api_key = st.secrets["OPENAI_API_KEY"]
 pinecone_api_key = st.secrets["PINECONE_API_KEY"]
 index_name = st.secrets["INDEX_KEY"]
 
 # Initializing Pinecone Vector DB
-pc.init(
-    api_key=pinecone_api_key,
-    environment=PINECONE_ENV
-)
+pc = Pinecone(api_key="529c2def-4f8b-4898-b227-d902cff98240")
+index = pc.Index("quickstart")
 
 st.title("Upload pdf files and create your database")
 
